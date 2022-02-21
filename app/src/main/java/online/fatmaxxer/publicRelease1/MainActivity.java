@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -104,6 +105,9 @@ import static java.lang.Math.sqrt;
 import static online.fatmaxxer.publicRelease1.MainActivity.FMMenuItem.*;
 
 public class MainActivity extends AppCompatActivity {
+    private Button buttonStart;
+    private boolean startedRec = false;
+
     public static final boolean requestLegacyExternalStorage = true;
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String API_LOGGER_TAG = "Polar API";
@@ -2119,10 +2123,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Newly added
+        // TODO: change after start to stop button -> close logs and ask for name of logs -> rename
+        // TODO: show if device is connect before -> only start recording
+        // TODO: fork project before doing anything else!
+        buttonStart = findViewById(R.id.button);
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!startedRec) {
+                    startAnalysis();
+                    startedRec = true;
+                    buttonStart.setText("Stop");
+                }
+                else {
+                    try {
+                        String tmpDeviceID = sharedPreferences.getString(POLAR_DEVICE_ID_PREFERENCE_STRING,"");
+                        api.disconnectFromDevice(tmpDeviceID);
+                    } catch (PolarInvalidArgument polarInvalidArgument) {}
+                    closeLogs();
+                    startedRec = false;
+                    buttonStart.setText("Start");
+                    // Leads to IOexception
+                    // TODO: clear graphs & close screen
+                }
+            }
+        });
         // auto-start
-        if (!sharedPreferences.getBoolean(ENABLE_REPLAY,false)) {
-            startAnalysis();
-        }
+
+        //if (!sharedPreferences.getBoolean(ENABLE_REPLAY,false)) {
+            // TODO: create button for start
+        //    startAnalysis();
+        //}
         // start BLE sensor emulator service
         if (sharedPreferences.getBoolean(ENABLE_SENSOR_EMULATION, false)) {
             startBLESensorEmulatorService();
@@ -2623,6 +2655,7 @@ public class MainActivity extends AppCompatActivity {
             }
             text_view.setText(logstring);
             text_hr.setText("" + data.hr);
+            // TODO: change to time spent in Z1
             text_secondary_label.setText(R.string.RootMeanSquareSuccessiveDifferencesAbbreviation);
             text_secondary.setText("" + round(rmssdWindowed));
             text_a1.setText("" + alpha1V2RoundedWindowed);

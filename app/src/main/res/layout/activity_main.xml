@@ -3,6 +3,7 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -181,6 +182,12 @@
             android:textColor="@color/colorText"
             android:textSize="32sp" />
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start" />
+
         <com.jjoe64.graphview.GraphView
             android:layout_width="match_parent"
             android:layout_height="360dip"
@@ -195,6 +202,7 @@
             android:text="TextView" />
 
         <!-- res/layout/example_activity.xml -->
+
         <androidx.fragment.app.FragmentContainerView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/settings_container"

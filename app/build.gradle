@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     def versionPropsFile = rootProject.file('version.properties')
     if (versionPropsFile.canRead()) {
@@ -16,7 +16,7 @@ android {
             versionCode versionCodeIntegerFromProps
             versionName versionNameFromProps
             minSdkVersion 21
-            targetSdkVersion 29
+            targetSdkVersion 30
             testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         }
     }
@@ -66,7 +66,7 @@ dependencies {
     implementation files('libs/polar-ble-sdk.aar')
     implementation files('libs/polar-protobuf-release.aar')
     implementation files('libs/polar-protobuf-release.aar')
-    implementation files('libs/android_antlib_4-14-0.jar')
+     // implementation files('libs/android_antlib_4-14-0.jar')
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.google.protobuf:protobuf-javalite:3.14.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
